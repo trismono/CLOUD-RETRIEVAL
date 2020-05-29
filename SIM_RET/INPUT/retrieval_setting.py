@@ -30,8 +30,8 @@ filename = base_dir + "retrieval_setting.ini"
 # define retrieval parameters
 tau0 = 8
 reff0 = 10
-weighting_tau0 = 1.0E8
-weighting_reff = 1.0E8
+weighting_tau0 = tau0*2
+weighting_reff = reff0*2
 ztop = 2.5
 zbase = 2.0
 aerosol_haze = "4"

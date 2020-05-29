@@ -1,7 +1,7 @@
 data_files_path /deos/trismonock/libRadtran-2.0.2/data/
 atmosphere_file /deos/trismonock/libRadtran-2.0.2/data/atmmod/afglms.dat
 source solar /deos/trismonock/libRadtran-2.0.2/data/solar_flux/kurudz_1.0nm.dat
-albedo_file /deos/trismonock/CLOUD_RETRIEVAL/DATA/albedo_sea_water.dat
+albedo_file /deos/trismonock/CLOUD_RETRIEVAL_DEV/DATA/albedo_sea_water.dat
 day_of_year 85
 sza 30.00
 phi0 100.00
@@ -15,7 +15,7 @@ wavelength 400.00 2000.00
 aerosol_default
 aerosol_haze 4
 aerosol_season 1
-wc_file 1D /deos/trismonock/CLOUD_RETRIEVAL/SIM_FWD/CLOUD/cloud_8.00_8.00.dat
+wc_file 1D /deos/trismonock/CLOUD_RETRIEVAL_DEV/SIM_FWD/CLOUD/cloud_6.00_8.00.dat
 wc_properties mie interpolate
-wc_modify tau550 set 8.00
+wc_modify tau550 set 6.00
 quiet

@@ -136,7 +136,7 @@ def l2m_wrapper(base_dir,pix_id):
         # +++++++++++++++++++++
         # define perturbation coefficient in percent
         c_ptau = np.array([0.06,0.04,0.02])
-        c_ptau = np.array([0.06,0.04,0.02])
+        c_preff = np.array([0.06,0.04,0.02])
 
         # define perturbation coefficient for calculating Jacobian matrix
         # the direction is determine by random number generator either 1 or -1
@@ -144,10 +144,10 @@ def l2m_wrapper(base_dir,pix_id):
         # if chi2 reduces, this coefficient should be reduced too
         if i == 0:
             p_tau = c_ptau[0]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_ptau[0]*[-1,1][random.randrange(2)]*xi_arr[i,1]
+            p_reff = c_preff[0]*[-1,1][random.randrange(2)]*xi_arr[i,1]
         
         # print statement
-        print("Info     | Perturbation coefficient p_tau = %.2f and p_reff = %.2f" %(p_tau,p_reff))
+        print("Info     | Perturbation coefficient p_tau = %.2f and p_reff = %.2f micron" %(p_tau,p_reff))
         
         # define cloud filename
         cloud_file1 = dummy_dir + "cloud_%s_%.3f_%.3f.dat" %(str(pix_id).zfill(5),xi_arr[i,0],xi_arr[i,1])
@@ -245,8 +245,8 @@ def l2m_wrapper(base_dir,pix_id):
         # +++++++++++++++++++++++++++++++++++++++++++++++
         # for i == 0 :: starting point
         if i == 0:
-            # regularization parameter :: initial value
-            gamma = np.mean(np.diag(np.matmul(kmat.T,np.matmul(inv(sy),kmat))))
+            # regularization parameter :: initial value - will be evaluated in each iteration
+            gamma = 1000
             
             # define cost function :: initial value
             chi2_0 = np.matmul((rad_meas-rad_fwd).T,np.matmul(inv(sy),rad_meas-rad_fwd)) + np.matmul((x0-xa).T,np.matmul(inv(sa),x0-xa))
@@ -271,8 +271,8 @@ def l2m_wrapper(base_dir,pix_id):
         # ++++++++++++++++++++++++++
         # evaluation of current step
         # ++++++++++++++++++++++++++
-        # coefficient to update gamma :: e.g., Rodgers (2000)
-        f = 10          
+        # coefficient to update gamma 
+        f = 3          
         
         # initial condition
         if i == 0:
@@ -286,13 +286,10 @@ def l2m_wrapper(base_dir,pix_id):
             
             # define perturbation coefficient
             p_tau = c_ptau[0]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_ptau[0]*[-1,1][random.randrange(2)]*xi_arr[i,1]
-            
-            # update state vector using Gain matrix :: linear approximation :: shortcut
-            dx = np.matmul(G,(rad_meas-rad_fwd))
+            p_reff = c_preff[0]*[-1,1][random.randrange(2)]*xi_arr[i,1]
 
             # updata state vector            
-            xi_arr[i+1,:] = xi_arr[i,:] + dx
+            xi_arr[i+1,:] = xi_arr[i,:]
 
         # semi trusted region            
         elif i > 0 and chi2_arr[i+1] > nmeas and chi2_arr[i+1] < chi2_arr[i]:
@@ -301,31 +298,25 @@ def l2m_wrapper(base_dir,pix_id):
 
             # define delta state for the reference when calculating Jacobian matrix
             p_tau = c_ptau[1]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_ptau[1]*[-1,1][random.randrange(2)]*xi_arr[i,1]
-            
-            # update state vector using Gain matrix :: linear approximation :: shortcut
-            dx = np.matmul(G,(rad_meas-rad_fwd))
+            p_reff = c_preff[1]*[-1,1][random.randrange(2)]*xi_arr[i,1]
             
             # update state vector
-            xi_arr[i+1,:] = xi + dx
+            xi_arr[i+1,:] = xi
 
         # trusted region        
         elif i > 0 and chi2_arr[i+1] <= nmeas:
             # define new gamma
-            gamma = 0           # pure Gauss-Newton approach
+            gamma = 1           # pure Gauss-Newton approach
 
             # define delta state for the reference when calculating Jacobian matrix
-            p_tau = c_ptau[1]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_ptau[1]*[-1,1][random.randrange(2)]*xi_arr[i,1]
-            
-            # update state vector using Gain matrix :: linear approximation
-            dx = np.matmul(G,(rad_meas-rad_fwd))
+            p_tau = c_ptau[2]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
+            p_reff = c_preff[2]*[-1,1][random.randrange(2)]*xi_arr[i,1]
             
             # update state vector
-            xi_arr[i+1,:] = xi + dx            
+            xi_arr[i+1,:] = xi            
         
         # print statement
-        print("Info     | tau = %.3f and reff = %.3f" %(xi_arr[i+1,0],xi_arr[i+1,1]))
+        print("Info     | tau = %.3f and reff = %.3f micron" %(xi_arr[i+1,0],xi_arr[i+1,1]))
         print("Info     | cost function chi2 = %.3f" %(chi2_arr[i+1])) 
     
         # ++++++++++++++++++++

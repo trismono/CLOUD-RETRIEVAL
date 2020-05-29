@@ -1,7 +1,7 @@
 data_files_path /deos/trismonock/libRadtran-2.0.2/data/
 atmosphere_file /deos/trismonock/libRadtran-2.0.2/data/atmmod/afglms.dat
 source solar /deos/trismonock/libRadtran-2.0.2/data/solar_flux/kurudz_1.0nm.dat
-albedo_file /deos/trismonock/CLOUD_RETRIEVAL/DATA/albedo_sea_water.dat
+albedo_file /deos/trismonock/CLOUD_RETRIEVAL_DEV/DATA/albedo_sea_water.dat
 day_of_year 85
 sza 30.00
 phi0 100.00

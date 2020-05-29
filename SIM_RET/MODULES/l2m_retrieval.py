@@ -13,12 +13,9 @@ import numpy as np
 from numpy.linalg import inv
 
 def l2m_retrieval(rad_meas,rad_fwd,sy,sa,kmat,xii,xa,gamma):
-    # Identity matrix (n state) for scaling
-    D = np.identity(len(sa))
-
-    # Levenberg-Marquardt (Rodgers 2000)
-    # xi+1 = xi + [(Sa-1 + Kit Sy-1 Ki + gamma D-1]-1 {Kit Sy-1 [y - F(xi)] - Sa-1 [xi - xa]}
-    x = xii + np.matmul(inv(inv(sa) + np.matmul(kmat.T,np.matmul(inv(sy),kmat)) + (gamma*inv(D))),(np.matmul(kmat.T,np.matmul(inv(sy),rad_meas-rad_fwd)) - np.matmul(inv(sa),xii-xa)))
+    # Gauss-Newton modified Levenberg-Marquardt (Rodgers 2000)
+    # xi+1 = xa + [gamma Sa-1 + KiT Sy-1 Ki]-1 KiT Sy-1 [y - F(x)i + Ki (xi - xa)]
+    x = xa + np.matmul(inv(gamma*inv(sa) + np.matmul(kmat.T,np.matmul(inv(sy),kmat))),np.matmul(kmat.T,np.matmul(inv(sy),(rad_meas-rad_fwd + np.matmul(kmat,xii-xa)))))
 
     # Covariance matrix of the solution
     # Sx = (Kt Sy-1 K + Sa-1)-1

@@ -6,13 +6,13 @@ zout = 3.00
 doy = 85
 
 [ALBEDO_FILE]
-albedo_file = /deos/trismonock/CLOUD_RETRIEVAL/DATA/albedo_sea_water.dat
+albedo_file = /deos/trismonock/CLOUD_RETRIEVAL_DEV/DATA/albedo_sea_water.dat
 
 [CLOUD_PROFILE]
 ztop = 2.00
 zbase = 1.50
 reff = 12.00
-tau550 = 8.00
+tau550 = 6.00
 
 [AEROSOL]
 aerosol_season = 1

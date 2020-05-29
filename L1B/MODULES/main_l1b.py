@@ -21,13 +21,13 @@ from l1b_noise import l1b_noise
 from l1b_interface import l1b_interface
 
 # get and define the working directory
-dir_path = os.getcwd() + "/"
-os.chdir(dir_path)
+base_dir = os.getcwd() + "/"
+os.chdir(base_dir)
 
 # define paths
-data_dir = os.path.realpath(dir_path + "../../DATA") + "/"
-input_dir = os.path.realpath(dir_path + "../../SIM_FWD/INOUT") + "/"
-output_dir = os.path.realpath(dir_path + "../OUTPUT") + "/"
+data_dir = os.path.realpath(base_dir + "../../DATA") + "/"
+input_dir = os.path.realpath(base_dir + "../../SIM_FWD/INOUT") + "/"
+output_dir = os.path.realpath(base_dir + "../OUTPUT") + "/"
 
 # create dir
 try:
@@ -54,10 +54,14 @@ nlambda_grid = 2
 # +++++++++++++++++++++++++++++++
 # search measurement setup files
 file_list = glob.glob(input_dir + "meas_setup_*.dat")
+file_list = np.sort(file_list)
 nfiles = len(file_list) 
 
 # loop over files
 for i in range(nfiles):
+    # print statement
+    print("Info     | Executing convolution module for pixel id:", i+1)
+    
     # define input file
     input_file = input_dir + "meas_setup_%i.dat" %(i+1)
     
@@ -90,6 +94,9 @@ Note from Author:
 
 # loop over files
 for i in range(nfiles):
+    # print statement
+    print("Info     | Executing noise module for pixel id:", i+1)
+    
     # loop over lambda grid
     for j in range(nlambda_grid):
         # for vnir

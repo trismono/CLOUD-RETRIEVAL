@@ -36,6 +36,9 @@ nfiles = len(stat_list)
 
 # loop over pixels
 for i in range(nfiles):
+    # print statement
+    print("Info    | Processing pixel id: ", i+1)
+
     # define init string
     kmat_list = glob.glob(input_dir + "kmat_" + str(i+1).zfill(5) + "_*.dat")
     
@@ -59,7 +62,7 @@ for i in range(nfiles):
     np.fill_diagonal(sy,meas_error)
         
     # define prior covariance sa :: should consistent with the retrieval setting
-    weighting = np.array([1.0E8,1.0E8], dtype=float)
+    weighting = np.array([8.0,10.0], dtype=float)
     sa = np.zeros(shape=(len(weighting),len(weighting)), dtype=float)
     np.fill_diagonal(sa,weighting**2)
     

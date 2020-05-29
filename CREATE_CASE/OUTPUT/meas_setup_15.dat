@@ -1,0 +1,24 @@
+[GEOMETRY]
+sza = 30.00
+phi0 = 100.00
+phi = 0.00
+zout = 3.00
+doy = 85
+
+[ALBEDO_FILE]
+albedo_file = /deos/trismonock/CLOUD_RETRIEVAL_DEV/DATA/albedo_sea_water.dat
+
+[CLOUD_PROFILE]
+ztop = 2.00
+zbase = 1.50
+reff = 14.00
+tau550 = 8.00
+
+[AEROSOL]
+aerosol_season = 1
+aerosol_haze = 4
+
+[WAVELENGTH]
+lambda0 = 400.00
+lambda1 = 2000.00
+

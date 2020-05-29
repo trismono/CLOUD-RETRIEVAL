@@ -11,7 +11,7 @@ Created on %(date)
 
 # import standard modules
 import os
-os.environ["OPENBLAS_NUM_THREADS"] = "3"      # openblas thread number (problem for Python 3)
+os.environ["OPENBLAS_NUM_THREADS"] = "3"      # limit openblas thread number (problem for numpy - Python 3)
 import glob
 from l2m_wrapper import l2m_wrapper
 
