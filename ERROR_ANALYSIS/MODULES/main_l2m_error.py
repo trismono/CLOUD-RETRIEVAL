@@ -62,7 +62,7 @@ for i in range(nfiles):
     np.fill_diagonal(sy,meas_error)
         
     # define prior covariance sa :: should consistent with the retrieval setting
-    weighting = np.array([8.0,10.0], dtype=float)
+    weighting = np.array([8.0*2,10.0*2], dtype=float)
     sa = np.zeros(shape=(len(weighting),len(weighting)), dtype=float)
     np.fill_diagonal(sa,weighting**2)
     
