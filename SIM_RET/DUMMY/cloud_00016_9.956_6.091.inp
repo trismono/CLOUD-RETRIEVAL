@@ -15,7 +15,7 @@ wavelength 550.00 1700.00
 aerosol_default
 aerosol_haze 4
 aerosol_season 1
-wc_file 1D /deos/trismonock/CLOUD_RETRIEVAL/SIM_RET/DUMMY/cloud_00016_7.520_10.000.dat
+wc_file 1D /deos/trismonock/CLOUD_RETRIEVAL/SIM_RET/DUMMY/cloud_00016_9.956_6.091.dat
 wc_properties mie interpolate
-wc_modify tau550 set 7.52
+wc_modify tau550 set 9.956042412731879
 quiet
