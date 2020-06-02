@@ -12,6 +12,7 @@ Created on %(date)
 # import standard modules
 import os
 os.environ["OPENBLAS_NUM_THREADS"] = "3"      # limit openblas thread number (problem for numpy - Python 3)
+import numpy as np
 import glob
 from l2m_wrapper import l2m_wrapper
 
@@ -39,6 +40,7 @@ except OSError:
 # ++++++++++++++++++++++++
 # define number of pixels
 config_list = glob.glob(case_dir + "meas_setup_*.dat")
+config_list = np.sort(config_list)
 nfiles = len(config_list)
 
 # loop over pixels

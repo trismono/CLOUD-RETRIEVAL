@@ -48,6 +48,7 @@ n_proc = 3
 
 # define number of pixels
 config_list = glob.glob(case_dir + "meas_setup_*.dat")
+config_list = np.sort(config_list)
 nfiles = len(config_list)
 
 # define iterable arguments for multiprocessing module

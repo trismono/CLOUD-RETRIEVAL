@@ -19,6 +19,7 @@ from kmat_module import kmat_module
 from l2m_retrieval import l2m_retrieval
 from diagnostic_module import diagnostic
 from numpy.linalg import inv
+import time
 
 def l2m_wrapper(base_dir,pix_id):     
     # ++++++++++++
@@ -111,7 +112,7 @@ def l2m_wrapper(base_dir,pix_id):
     # retrieval
     # +++++++++
     # define array
-    xi_arr = np.zeros(shape=(int(iter_max)+1,2))
+    xi_arr = np.zeros(shape=(int(iter_max)+1,nstate))
     chi2_arr = np.zeros(int(iter_max)+1)
     
     # assign x0 to xi
@@ -124,6 +125,9 @@ def l2m_wrapper(base_dir,pix_id):
     tau_max = 50
     reff_min = 4        # lower boundary of mie scattering properties
     reff_max = 24       # upper boundary of mie scattering properties
+
+    # define time start
+    time0 = time.perf_counter()
     
     # start iteration : the number of iteration is set in the retrieval setting
     i = 0
@@ -135,8 +139,8 @@ def l2m_wrapper(base_dir,pix_id):
         # running forward model
         # +++++++++++++++++++++
         # define perturbation coefficient in percent
-        c_ptau = np.array([0.06,0.04,0.02])
-        c_preff = np.array([0.06,0.04,0.02])
+        c_ptau = np.array([0.04,0.02,0.01])
+        c_preff = np.array([0.04,0.02,0.01])
 
         # define perturbation coefficient for calculating Jacobian matrix
         # the direction is determine by random number generator either 1 or -1
@@ -316,8 +320,8 @@ def l2m_wrapper(base_dir,pix_id):
             xi_arr[i+1,:] = xi            
         
         # print statement
-        print("Info     | tau = %.3f and reff = %.3f micron" %(xi_arr[i+1,0],xi_arr[i+1,1]))
-        print("Info     | cost function chi2 = %.3f" %(chi2_arr[i+1])) 
+        print("Info     | State tau = %.3f and reff = %.3f micron" %(xi_arr[i+1,0],xi_arr[i+1,1]))
+        print("Info     | Cost function chi2 = %.3f" %(chi2_arr[i+1])) 
     
         # ++++++++++++++++++++
         # retrieval diagnostic
@@ -336,7 +340,7 @@ def l2m_wrapper(base_dir,pix_id):
         t_dchi2 = 0.015  
         
         # 1 = converged :: should be more than one iteration
-        if i > 0 and r_chi2 < t_dchi2:     
+        if i > 0 and r_chi2 < t_dchi2 and chi2_arr[i+1] <= nmeas:     
             # print statement
             print("Info     | Convergence ID = 1 :: Retrieval succeed!")
             
@@ -366,12 +370,10 @@ def l2m_wrapper(base_dir,pix_id):
             break
             
         # 3 = does not converged :: boundary hit
-        elif xi_arr[i+1,0] <= tau_min or xi_arr[i+1,0] >= tau_max or \
-        xi_arr[i+1,1] <= reff_min or xi_arr[i+1,1] >= reff_max or \
-        xi_arr[i,0]+p_tau <= tau_min or xi_arr[i,0]+p_tau >= tau_max or \
-        xi_arr[i,1]+p_reff <= reff_min or xi_arr[i,1]+p_reff >= reff_max or \
-        xi_arr[i,0] <= tau_min or xi_arr[i,0] >= tau_max or \
-        xi_arr[i,1] <= reff_min or xi_arr[i,1] >= reff_max:
+        elif xi[0] <= tau_min or xi[0] >= tau_max or \
+        xi[1] <= reff_min or xi[1] >= reff_max or \
+        xi[0]+p_tau <= tau_min or xi[0]+p_tau >= tau_max or \
+        xi[1]+p_reff <= reff_min or xi[1]+p_reff >= reff_max:
             # print statement
             print("Info     | Convergence ID = 3 :: Lower or upper boundary hit!")
 
@@ -388,4 +390,13 @@ def l2m_wrapper(base_dir,pix_id):
         # update iteration
         i += 1
 
-
+    # define end time
+    time1 = time.perf_counter()
+    
+    # calculate execution time
+    time_total = time1-time0
+    time_mean = time_total/i
+    
+    # print statement
+    print("Info     | Retrieval done in %.2f sec" %time_total)
+    print("Info     | Elapsed time per iteration = %.2f sec" %time_mean)

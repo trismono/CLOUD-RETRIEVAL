@@ -32,6 +32,7 @@ except OSError:
 
 # define cases
 stat_list = glob.glob(input_dir + "statistics*.dat")
+stat_list = np.sort(stat_list)
 nfiles = len(stat_list)
 
 # loop over pixels
@@ -62,7 +63,7 @@ for i in range(nfiles):
     np.fill_diagonal(sy,meas_error)
         
     # define prior covariance sa :: should consistent with the retrieval setting
-    weighting = np.array([8.0*2,10.0*2], dtype=float)
+    weighting = np.array([16.0,20.0], dtype=float)
     sa = np.zeros(shape=(len(weighting),len(weighting)), dtype=float)
     np.fill_diagonal(sa,weighting**2)
     
@@ -109,6 +110,6 @@ for i in range(nfiles):
     # write outputs    
     with open(out_file, 'w+') as fid:
         # write a header variable names and units, and data
-        fid.writelines([" Prior error       Noise error       Smoothing error   Total error \n"])
+        fid.writelines(["%17s %17s %17s %17s \n" %("Prior error","Noise error","Smoothing error","Total error")])
         np.savetxt(fid, data_dummy, fmt=['%17.10e','%17.10e','%17.10e','%17.10e'])
     

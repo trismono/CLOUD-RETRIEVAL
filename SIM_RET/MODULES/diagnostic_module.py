@@ -15,15 +15,20 @@ def diagnostic(stat_file,pix_id,message,niter,chi2,x,gain_file,lambda_meas,G):
     # open statistic file
     with open(stat_file, 'w+') as fid:
         # write a header :: variable names and units
-        fid.write("  pix_id    conv_id     n_iter         chi2        tau   reff (\mu) \n")
+        fid.write("%8s%10s%10s%12s%10s%12s\n" %("pix_id",       # pixel identifier
+                                                "conv_id",      # convergence diagnostic
+                                                "n_iter",       # number of iteration
+                                                "chi2",         # cost function
+                                                "tau",          # tau
+                                                "reff (\mu)"))  # reff
         
         # write retrieval outputs
-        fid.write("%8i %10i %10i %12.3f %10.3f %12.3f" %(pix_id,       # pixel idntifier
-                                                         message,      # convergence diagnostic
-                                                         niter,        # number of iteration
-                                                         chi2,         # cost function
-                                                         x[0],         # tau
-                                                         x[1]))        # reff
+        fid.write("%8i%10i%10i%12.3f%10.3f%12.3f" %(pix_id,     # pixel identifier
+                                                    message,    # convergence diagnostic
+                                                    niter,      # number of iteration
+                                                    chi2,       # cost function
+                                                    x[0],       # tau
+                                                    x[1]))      # reff
     
     # create array for gain :: lambda, gain_tau, gain_reff
     data = np.zeros(shape=(len(lambda_meas),3), dtype = float)

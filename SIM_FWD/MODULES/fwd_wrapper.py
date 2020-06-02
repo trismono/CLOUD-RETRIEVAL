@@ -15,6 +15,7 @@ from read_config import read_config
 from uvspec_input import uvspec_input
 from cloud_profile import cloud_profile
 from read_uvspec_output import read_uvspec_output
+import time
 
 def fwd_wrapper(base_dir, pix_id):
     # define paths
@@ -29,6 +30,9 @@ def fwd_wrapper(base_dir, pix_id):
     
     # define config file
     config_file = case_dir + "meas_setup_%i.dat" %pix_id
+
+    # define time start
+    time0 = time.perf_counter()
     
     # +++++++++++++++++++++
     # read and parse config
@@ -86,5 +90,13 @@ def fwd_wrapper(base_dir, pix_id):
     # reading and reformat uvspec output
     read_uvspec_output(input_file=output_file, output_file=output_file_fmt)
     
+    # define end time
+    time1 = time.perf_counter()
+    
+    # calculate execution time
+    time_total = time1-time0
+    
+    # print statement
+    print("Info     | Elapsed time = %.2f sec" %time_total)
     
     

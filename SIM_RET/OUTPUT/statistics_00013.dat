@@ -1,2 +1,2 @@
-  pix_id    conv_id     n_iter         chi2        tau   reff (\mu) 
-      13          1          3       11.493      7.954       10.335
+  pix_id   conv_id    n_iter        chi2       tau  reff (\mu)
+      13         1         4      11.465     7.953      10.336
