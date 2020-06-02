@@ -337,7 +337,7 @@ def l2m_wrapper(base_dir,pix_id):
         # define threshold (ratio in percent) between chi2_i+1 and chi2_i+1
         # a retrieval is converged when the change on chi2 is neggligible
         # don't use absolute threshold as it changes with n_measurements
-        t_dchi2 = 0.015  
+        t_dchi2 = 0.05
         
         # 1 = converged :: should be more than one iteration
         if i > 0 and r_chi2 < t_dchi2 and chi2_arr[i+1] <= nmeas:     
