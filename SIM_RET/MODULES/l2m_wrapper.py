@@ -147,8 +147,8 @@ def l2m_wrapper(base_dir,pix_id):
         # this coefficient will be evaluated based on the cost function chi2
         # if chi2 reduces, this coefficient should be reduced too
         if i == 0:
-            p_tau = c_ptau[0]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_preff[0]*[-1,1][random.randrange(2)]*xi_arr[i,1]
+            p_tau = c_ptau[0]*[-1,1][random.randrange(2)]*x0[0]   
+            p_reff = c_preff[0]*[-1,1][random.randrange(2)]*x0[1]
         
         # print statement
         print("Info     | Perturbation coefficient p_tau = %.2f and p_reff = %.2f micron" %(p_tau,p_reff))
@@ -280,6 +280,10 @@ def l2m_wrapper(base_dir,pix_id):
         
         # initial condition
         if i == 0:
+            # define perturbation coefficient
+            p_tau = c_ptau[0]*[-1,1][random.randrange(2)]*xi[0]   
+            p_reff = c_preff[0]*[-1,1][random.randrange(2)]*xi[1]
+            
             # update state vector
             xi_arr[i+1,:] = xi
 
@@ -289,8 +293,8 @@ def l2m_wrapper(base_dir,pix_id):
             gamma = gamma*f     # gradient descent
             
             # define perturbation coefficient
-            p_tau = c_ptau[0]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_preff[0]*[-1,1][random.randrange(2)]*xi_arr[i,1]
+            p_tau = c_ptau[0]*[-1,1][random.randrange(2)]*xi[0]   
+            p_reff = c_preff[0]*[-1,1][random.randrange(2)]*xi[1]
 
             # updata state vector            
             xi_arr[i+1,:] = xi_arr[i,:]
@@ -301,8 +305,8 @@ def l2m_wrapper(base_dir,pix_id):
             gamma = gamma/f     # gradient descent
 
             # define delta state for the reference when calculating Jacobian matrix
-            p_tau = c_ptau[1]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_preff[1]*[-1,1][random.randrange(2)]*xi_arr[i,1]
+            p_tau = c_ptau[1]*[-1,1][random.randrange(2)]*xi[0]  
+            p_reff = c_preff[1]*[-1,1][random.randrange(2)]*xi[1]
             
             # update state vector
             xi_arr[i+1,:] = xi
@@ -313,8 +317,8 @@ def l2m_wrapper(base_dir,pix_id):
             gamma = 1           # pure Gauss-Newton approach
 
             # define delta state for the reference when calculating Jacobian matrix
-            p_tau = c_ptau[2]*[-1,1][random.randrange(2)]*xi_arr[i,0]   
-            p_reff = c_preff[2]*[-1,1][random.randrange(2)]*xi_arr[i,1]
+            p_tau = c_ptau[2]*[-1,1][random.randrange(2)]*xi[0]   
+            p_reff = c_preff[2]*[-1,1][random.randrange(2)]*xi[1]
             
             # update state vector
             xi_arr[i+1,:] = xi            

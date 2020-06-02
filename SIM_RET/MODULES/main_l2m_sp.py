@@ -44,8 +44,7 @@ config_list = np.sort(config_list)
 nfiles = len(config_list)
 
 # loop over pixels
-# for i in range(nfiles):
-for i in [1]:
+for i in range(nfiles):
     # define pix_id
     pix_id = i+1
     
