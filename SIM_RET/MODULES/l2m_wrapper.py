@@ -399,7 +399,7 @@ def l2m_wrapper(base_dir,pix_id):
     
     # calculate execution time
     time_total = time1-time0
-    time_mean = time_total/i
+    time_mean = time_total/(i+1)
     
     # print statement
     print("Info     | Retrieval done in %.2f sec" %time_total)
