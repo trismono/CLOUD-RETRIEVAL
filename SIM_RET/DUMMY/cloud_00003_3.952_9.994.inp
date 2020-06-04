@@ -17,5 +17,5 @@ aerosol_haze 4
 aerosol_season 1
 wc_file 1D /deos/trismonock/CLOUD_RETRIEVAL/SIM_RET/DUMMY/cloud_00003_3.952_9.994.dat
 wc_properties mie interpolate
-wc_modify tau550 set 3.9518070873107236
+wc_modify tau550 set 3.9517588756659467
 quiet
