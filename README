@@ -1,0 +1,21 @@
+"OPTIMAL ESTIMATION FOR STANDARD CLOUD PROPERTIES RETRIEVAL"
+
+
+Author		: Trismono Candra Krisna
+Institution	: SRON Netherlands Institute for Space Research
+Email		: T.C.Krisna@sron.nl
+Date 		: 02 June 2020
+Version		: 2.1 (official version)
+
+
+CONTENT (MODULES):
+- DATA
+- CREATE_CASE
+- SIM_FWD
+- L1B
+- SIM_RET
+- ERROR_ANALYSIS
+
+
+HOW TO USE THE MODULES:
+Please refer to the manual guideline "MANUAL_GUIDELINE_V2.1.pdf"
