@@ -1,0 +1,11 @@
++++++++++++++++++++++
+Linear Error Analysis
++++++++++++++++++++++
+Column 1    = Prior_Error
+Column 2    = Noise_Error
+Column 3    = Smoothing_Error
+Column 4    = Total_Error
+Row 1       = Optical thickness
+Row 2       = Effective radius [micron]
+ 1.6000000000e+01  7.0697653837e-02  5.5819165959e-04  7.0699857398e-02
+ 2.0000000000e+01  1.5697896758e-01  1.3611368481e-03  1.5698486856e-01

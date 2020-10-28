@@ -1,0 +1,14 @@
+[LIBRADTRAN]
+libradtran_dir = /deos/trismonock/libRadtran-2.0.2/
+atm_profile = afglms
+source = solar
+solar_type = kurudz_1.0nm
+rte_solver = fdisort2
+mol_abs_parameter = lowtran
+wc_mode = mie
+umu = -1.0, 1.0
+nstream = 16
+
+[CORE]
+n_core = 3
+
